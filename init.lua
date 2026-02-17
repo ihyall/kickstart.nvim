@@ -883,7 +883,7 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -894,6 +894,29 @@ require('lazy').setup({
   'sainnhe/gruvbox-material',
   'xiyaowong/transparent.nvim',
   'OXY2DEV/markview.nvim',
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    version = '*',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      'antosha417/nvim-lsp-file-operations',
+    },
+    lazy = false,
+    keys = {
+      { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    },
+    opts = {
+      filesystem = {
+        window = {
+          mappings = {
+            ['\\'] = 'close_window',
+          },
+        },
+      },
+    },
+  },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
