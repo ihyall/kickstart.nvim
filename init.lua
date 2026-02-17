@@ -307,6 +307,8 @@ require('lazy').setup({
       -- delay between pressing a key and opening which-key (milliseconds)
       delay = 0,
       icons = { mappings = vim.g.have_nerd_font },
+      preset = 'modern',
+      win = { no_overlap = false },
 
       -- Document existing key chains
       spec = {
@@ -849,6 +851,7 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/nvim-mini/mini.nvim
+      require('mini.align').setup()
     end,
   },
 
