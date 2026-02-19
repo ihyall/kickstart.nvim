@@ -903,17 +903,6 @@ require('lazy').setup({
         'NeoTreeEndOfBuffer',
       },
     },
-    -- config = function()
-    --   require('transparent').setup {
-    --     extra_groups = {
-    --       'NormalFloat',
-    --       'NvimTreeNormal',
-    --       'NeoTreeNormal',
-    --       'NeoTreeFloatBorder',
-    --       'NeoTreeNormalNC',
-    --     },
-    --   }
-    -- end,
   },
   {
     'OXY2DEV/markview.nvim',
