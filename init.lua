@@ -893,6 +893,7 @@ require('lazy').setup({
   },
   {
     'xiyaowong/transparent.nvim',
+    lazy = false,
     opts = {
       extra_groups = {
         'NormalFloat',
@@ -901,6 +902,8 @@ require('lazy').setup({
         'NeoTreeFloatBorder',
         'NeoTreeNormalNC',
         'NeoTreeEndOfBuffer',
+        'WhichKeyBorder',
+        'WhichKeyTitle',
       },
     },
   },
