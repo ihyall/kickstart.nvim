@@ -891,7 +891,30 @@ require('lazy').setup({
     priority = 1000,
     config = function() vim.cmd.colorscheme 'gruvbox-material' end,
   },
-  'xiyaowong/transparent.nvim',
+  {
+    'xiyaowong/transparent.nvim',
+    opts = {
+      extra_groups = {
+        'NormalFloat',
+        'NvimTreeNormal',
+        'NeoTreeNormal',
+        'NeoTreeFloatBorder',
+        'NeoTreeNormalNC',
+        'NeoTreeEndOfBuffer',
+      },
+    },
+    -- config = function()
+    --   require('transparent').setup {
+    --     extra_groups = {
+    --       'NormalFloat',
+    --       'NvimTreeNormal',
+    --       'NeoTreeNormal',
+    --       'NeoTreeFloatBorder',
+    --       'NeoTreeNormalNC',
+    --     },
+    --   }
+    -- end,
+  },
   {
     'OXY2DEV/markview.nvim',
     lazy = true,
