@@ -833,6 +833,19 @@ require('lazy').setup({
       -- ... and there is more!
       --  Check out: https://github.com/nvim-mini/mini.nvim
       require('mini.align').setup()
+      require('mini.move').setup {
+        mappings = {
+          left = '',
+          right = '',
+          up = '<M-k>',
+          down = '<M-j>',
+
+          line_left = '',
+          line_right = '',
+          line_down = '<M-j>',
+          line_up = '<M-k>',
+        },
+      }
     end,
   },
 
@@ -916,10 +929,10 @@ require('lazy').setup({
       local set = vim.keymap.set
 
       -- Add or skip cursor above/below the main cursor.
-      set({ 'n', 'x' }, '<c-m-k>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: Add cursor above' })
-      set({ 'n', 'x' }, '<c-m-up>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: Add cursor above' })
-      set({ 'n', 'x' }, '<c-m-j>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: Add cursor below' })
-      set({ 'n', 'x' }, '<c-m-down>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: Add cursor below' })
+      set({ 'n', 'x' }, '<C-M-k>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: Add cursor above' })
+      set({ 'n', 'x' }, '<C-M-up>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: Add cursor above' })
+      set({ 'n', 'x' }, '<C-M-j>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: Add cursor below' })
+      set({ 'n', 'x' }, '<C-M-down>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: Add cursor below' })
       set({ 'n', 'x' }, '<leader>ck', function() mc.lineSkipCursor(-1) end, { desc = 'Multicursor: Move current cursor up' })
       set({ 'n', 'x' }, '<leader>c<up>', function() mc.lineSkipCursor(-1) end, { desc = 'Multicursor: Move current cursor up' })
       set({ 'n', 'x' }, '<leader>cj', function() mc.lineSkipCursor(1) end, { desc = 'Multicursor: Move current cursor down' })
@@ -944,9 +957,9 @@ require('lazy').setup({
       -- multiple cursors. This lets you have overlapping mappings.
       mc.addKeymapLayer(function(layerSet)
         -- Select a different cursor as the main one.
-        layerSet({ 'n', 'x' }, '<c-m-h>', mc.prevCursor, { desc = 'Multicursor: Make previous cursor main' })
+        layerSet({ 'n', 'x' }, '<C-M-h>', mc.prevCursor, { desc = 'Multicursor: Make previous cursor main' })
         layerSet({ 'n', 'x' }, '<left>', mc.prevCursor, { desc = 'Multicursor: Make previous cursor main' })
-        layerSet({ 'n', 'x' }, '<c-m-l>', mc.nextCursor, { desc = 'Multicursor: Make next cursor main' })
+        layerSet({ 'n', 'x' }, '<C-M-l>', mc.nextCursor, { desc = 'Multicursor: Make next cursor main' })
         layerSet({ 'n', 'x' }, '<right>', mc.nextCursor, { desc = 'Multicursor: Make next cursor main' })
 
         -- Delete the main cursor.
