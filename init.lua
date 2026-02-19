@@ -799,6 +799,7 @@ require('lazy').setup({
 
   { -- Collection of various small independent plugins/modules
     'nvim-mini/mini.nvim',
+    lazy = false,
     config = function()
       require('mini.icons').setup { style = 'glyph' }
       -- Better Around/Inside textobjects
@@ -873,10 +874,15 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
   {
     'sainnhe/gruvbox-material',
+    lazy = false,
+    priority = 1000,
     config = function() vim.cmd.colorscheme 'gruvbox-material' end,
   },
   'xiyaowong/transparent.nvim',
-  'OXY2DEV/markview.nvim',
+  {
+    'OXY2DEV/markview.nvim',
+    lazy = true,
+  },
   {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
@@ -924,6 +930,7 @@ require('lazy').setup({
       set({ 'n', 'x' }, '<leader>cs', function() mc.matchSkipCursor(1) end, { desc = 'Multicursor: Move cursor to next match' })
       set({ 'n', 'x' }, '<leader>cN', function() mc.matchAddCursor(-1) end, { desc = 'Multicursor: Add cursor to previous match' })
       set({ 'n', 'x' }, '<leader>cS', function() mc.matchSkipCursor(-1) end, { desc = 'Multicursor: Move cursor to previous match' })
+      set({ 'n', 'x' }, '<leader>cA', mc.matchAllAddCursors, { desc = 'Multicursor: Add cursors to all matches' })
 
       -- Add and remove cursors with control + left click.
       set('n', '<c-leftmouse>', mc.handleMouse)
@@ -937,7 +944,9 @@ require('lazy').setup({
       -- multiple cursors. This lets you have overlapping mappings.
       mc.addKeymapLayer(function(layerSet)
         -- Select a different cursor as the main one.
+        layerSet({ 'n', 'x' }, '<c-m-h>', mc.prevCursor, { desc = 'Multicursor: Make previous cursor main' })
         layerSet({ 'n', 'x' }, '<left>', mc.prevCursor, { desc = 'Multicursor: Make previous cursor main' })
+        layerSet({ 'n', 'x' }, '<c-m-l>', mc.nextCursor, { desc = 'Multicursor: Make next cursor main' })
         layerSet({ 'n', 'x' }, '<right>', mc.nextCursor, { desc = 'Multicursor: Make next cursor main' })
 
         -- Delete the main cursor.
