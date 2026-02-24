@@ -922,16 +922,84 @@ require('lazy').setup({
     },
     lazy = false,
     keys = {
-      { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+      {
+        '\\\\',
+        function()
+          require('neo-tree.command').execute {
+            action = 'focus',
+            -- reveal = true,
+          }
+        end,
+        desc = 'NeoTree focus filesystem',
+      },
+      { '\\f', ':Neotree reveal<CR>', desc = 'NeoTree reveal current file', silent = true },
+      {
+        '\\g',
+        function()
+          require('neo-tree.command').execute {
+            action = 'focus',
+            source = 'git_status',
+            reveal = true,
+          }
+        end,
+        desc = 'NeoTree reveal git changes',
+      },
+      {
+        '\\b',
+        function()
+          require('neo-tree.command').execute {
+            action = 'focus',
+            source = 'buffers',
+            reveal = true,
+          }
+        end,
+        desc = 'NeoTree browse buffers',
+      },
+      {
+        '\\o',
+        function()
+          require('neo-tree.command').execute {
+            toggle = true,
+            source = 'document_symbols',
+            position = 'float',
+          }
+        end,
+        desc = 'NeoTree document symbols toggle',
+        silent = true,
+      },
     },
     opts = {
-      filesystem = {
-        window = {
-          mappings = {
-            ['\\'] = 'close_window',
-          },
+      default_component_configs = {
+        indent = {
+          with_expanders = true,
         },
       },
+      window = {
+        mappings = {
+          ['\\'] = 'close_window',
+        },
+      },
+      filesystem = {
+        bind_to_cwd = true,
+      },
+      sources = {
+        'filesystem',
+        'buffers',
+        'git_status',
+        'document_symbols',
+      },
+      source_selector = {
+        winbar = true,
+        statusline = false,
+        sources = {
+          { source = 'filesystem', display_name = ' 󰉓 File ' },
+          { source = 'git_status', display_name = ' 󰊢 Git ' },
+          { source = 'buffers', display_name = ' 󰓩 Buf ' },
+          -- { source = 'document_symbols', display_name = '  Sym ' },
+        },
+      },
+      tabs_layout = 'equal',
+      content_layout = 'center',
     },
   },
   {
