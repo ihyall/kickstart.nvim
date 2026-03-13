@@ -995,7 +995,7 @@ require('lazy').setup({
           { source = 'filesystem', display_name = ' 󰉓 File ' },
           { source = 'git_status', display_name = ' 󰊢 Git ' },
           { source = 'buffers', display_name = ' 󰓩 Buf ' },
-          -- { source = 'document_symbols', display_name = '  Sym ' },
+          { source = 'document_symbols', display_name = '  Sym ' },
         },
       },
       tabs_layout = 'equal',
