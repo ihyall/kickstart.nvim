@@ -601,6 +601,21 @@ require('lazy').setup({
         -- clangd = {},
         gopls = {},
         ruff = {},
+        -- Vue 3
+        vue_ls = {},
+        -- TypeScript
+        ts_ls = {
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                languages = { 'vue' },
+              },
+            },
+          },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         --
@@ -622,6 +637,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
+        'vue_ls',
+        'ts_ls',
         -- You can add other tools here that you want Mason to install
       })
 
@@ -856,7 +873,8 @@ require('lazy').setup({
     branch = 'main',
     build = ':TSUpdate',
     config = function()
-      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'go', 'vue', 'css', 'javascript' }
+      local filetypes =
+        { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'go', 'vue', 'css', 'javascript' }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = filetypes,
