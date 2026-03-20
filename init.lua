@@ -316,6 +316,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>c', group = 'Multi[C]ursor', mode = { 'n', 'v' } },
+        { '<leader>g', group = 'Neo[G]it', mode = { 'n', 'v' } },
       },
     },
   },
@@ -1092,7 +1093,7 @@ require('lazy').setup({
   },
   {
     'NeogitOrg/neogit',
-    lazy = true,
+    lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
 
@@ -1107,9 +1108,18 @@ require('lazy').setup({
       -- 'folke/snacks.nvim', -- optional
     },
     cmd = 'Neogit',
-    keys = {
-      { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
-    },
+    config = function()
+      local neogit = require 'neogit'
+      local set = vim.keymap.set
+
+      set({ 'n', 'x' }, '<leader>gg', function() neogit.open { kind = 'floating' } end, { desc = 'Show Neogit UI' })
+      set({ 'n', 'x' }, '<leader>gl', function() neogit.open { 'log', branch = 'current', kind = 'floating' } end, { desc = 'Show Neogit log' })
+
+      neogit.setup { graph_style = 'unicode' }
+    end,
+    -- keys = {
+    --   { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
+    -- },
   },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
