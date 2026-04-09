@@ -173,6 +173,18 @@ vim.o.confirm = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set(
+  'n',
+  'K',
+  function()
+    vim.lsp.buf.hover {
+      border = 'rounded',
+      max_height = 25,
+      max_width = 120,
+    }
+  end,
+  { desc = 'Hover documentation' }
+)
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -933,6 +945,7 @@ require('lazy').setup({
         'NeoTreeEndOfBuffer',
         'WhichKeyBorder',
         'WhichKeyTitle',
+        'FloatBorder',
       },
       exclude = {
         -- 'LspFloatWinBorder',
