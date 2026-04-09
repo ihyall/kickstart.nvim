@@ -164,6 +164,9 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- This option controls the default look of window borders, commented because it messes with autocompletion and stuff
+-- vim.o.winborder = 'rounded'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -741,9 +744,7 @@ require('lazy').setup({
           --    https://github.com/rafamadriz/friendly-snippets
           {
             'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
+            config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
           },
         },
         opts = {},
@@ -789,7 +790,9 @@ require('lazy').setup({
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 500, window = {
+          border = 'rounded',
+        } },
       },
 
       sources = {
@@ -808,7 +811,9 @@ require('lazy').setup({
       fuzzy = { implementation = 'lua' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
+      signature = { enabled = true, window = {
+        border = 'rounded',
+      } },
     },
   },
 
@@ -908,7 +913,12 @@ require('lazy').setup({
     'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
-    config = function() vim.cmd.colorscheme 'gruvbox-material' end,
+    config = function()
+      vim.cmd.colorscheme 'gruvbox-material'
+      -- NOTE: If I want, I can change some group colors like that
+
+      -- vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
+    end,
   },
   {
     'xiyaowong/transparent.nvim',
@@ -923,6 +933,9 @@ require('lazy').setup({
         'NeoTreeEndOfBuffer',
         'WhichKeyBorder',
         'WhichKeyTitle',
+      },
+      exclude = {
+        -- 'LspFloatWinBorder',
       },
     },
   },
