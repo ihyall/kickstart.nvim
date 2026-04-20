@@ -890,8 +890,26 @@ require('lazy').setup({
     branch = 'main',
     build = ':TSUpdate',
     config = function()
-      local filetypes =
-        { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'go', 'vue', 'css', 'javascript' }
+      local filetypes = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'latex',
+        'typst',
+        'yaml',
+        'query',
+        'vim',
+        'vimdoc',
+        'go',
+        'vue',
+        'css',
+        'javascript',
+      }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = filetypes,
@@ -959,9 +977,34 @@ require('lazy').setup({
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      latex = {
+        enabled = false, -- Потому что у меня нет конвертеров
+        render_modes = false,
+        converter = { 'utftex', 'latex2text' },
+        highlight = 'RenderMarkdownMath',
+        position = 'center',
+        top_pad = 0,
+        bottom_pad = 0,
+      },
+    },
     lazy = false,
   },
+  -- {
+  --   'OXY2DEV/markview.nvim',
+  --   lazy = false,
+  --   opts = {
+  --     latex = {
+  --       enable = true,
+  --       inline = {
+  --         enable = true,
+  --       },
+  --       -- blocks = {
+  --       --   enable = true,
+  --       -- },
+  --     },
+  --   },
+  -- },
   {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
