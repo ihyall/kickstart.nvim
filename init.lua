@@ -884,37 +884,74 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    branch = 'main',
-    build = ':TSUpdate',
+  -- { -- Highlight, edit, and navigate code
+  --   'nvim-treesitter/nvim-treesitter',
+  --   lazy = false,
+  --   branch = 'main',
+  --   build = ':TSUpdate',
+  --   config = function()
+  --     local filetypes = {
+  --       'bash',
+  --       'c',
+  --       'diff',
+  --       'html',
+  --       'lua',
+  --       'luadoc',
+  --       'markdown',
+  --       'markdown_inline',
+  --       'latex',
+  --       'typst',
+  --       'yaml',
+  --       'query',
+  --       'vim',
+  --       'vimdoc',
+  --       'go',
+  --       'vue',
+  --       'css',
+  --       'javascript',
+  --       'python',
+  --     }
+  --     require('nvim-treesitter').install(filetypes)
+  --     vim.api.nvim_create_autocmd('FileType', {
+  --       pattern = filetypes,
+  --       callback = function() vim.treesitter.start() end,
+  --     })
+  --   end,
+  -- },
+  {
+    'romus204/tree-sitter-manager.nvim',
+    dependencies = {}, -- tree-sitter CLI must be installed system-wide
     config = function()
-      local filetypes = {
-        'bash',
-        'c',
-        'diff',
-        'html',
-        'lua',
-        'luadoc',
-        'markdown',
-        'markdown_inline',
-        'latex',
-        'typst',
-        'yaml',
-        'query',
-        'vim',
-        'vimdoc',
-        'go',
-        'vue',
-        'css',
-        'javascript',
+      require('tree-sitter-manager').setup {
+        -- Default Options
+        ensure_installed = {
+          'bash',
+          'c',
+          'diff',
+          'html',
+          'lua',
+          'luadoc',
+          'markdown',
+          'markdown_inline',
+          'latex',
+          'typst',
+          'yaml',
+          'query',
+          'vim',
+          'vimdoc',
+          'go',
+          'vue',
+          'css',
+          'javascript',
+          'python',
+        }, -- list of parsers to install at the start of a neovim session
+        border = 'rounded', -- border style for the window (e.g. "rounded", "single"), if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+        -- auto_install = false, -- if enabled, install missing parsers when editing a new file
+        highlight = true, -- treesitter highlighting is enabled by default
+        -- languages = {}, -- override or add new parser sources
+        -- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
+        -- query_dir = vim.fn.stdpath("data") .. "/site/queries",
       }
-      require('nvim-treesitter').install(filetypes)
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = filetypes,
-        callback = function() vim.treesitter.start() end,
-      })
     end,
   },
 
@@ -972,7 +1009,8 @@ require('lazy').setup({
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
+    dependencies = { 'romus204/tree-sitter-manager.nvim', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite (INFO customized after nvim-treesitter was archived)
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
