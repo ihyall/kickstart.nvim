@@ -157,7 +157,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 5
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -167,24 +167,29 @@ vim.o.confirm = true
 -- This option controls the default look of window borders, commented because it messes with autocompletion and stuff
 -- vim.o.winborder = 'rounded'
 
+-- Folding control (moved to nvim-ufo config)
+-- vim.o.foldmethod = 'syntax'
+-- vim.o.foldlevel = 99
+-- vim.o.foldlevelstart = 99
+-- vim.o.foldcolumn = '0'
+-- vim.o.foldenable = true
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set(
-  'n',
-  'K',
-  function()
-    vim.lsp.buf.hover {
-      border = 'rounded',
-      max_height = 25,
-      max_width = 120,
-    }
-  end,
-  { desc = 'Hover documentation' }
-)
+local hover_definition_with_border = function()
+  vim.lsp.buf.hover {
+    border = 'rounded',
+    max_height = 25,
+    max_width = 120,
+  }
+end
+
+-- INFO: moved to nvim-ufo config to enable fold previews
+-- vim.keymap.set('n', 'K', hover_definition_with_border() { desc = 'Hover documentation' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -984,7 +989,8 @@ require('lazy').setup({
       vim.cmd.colorscheme 'gruvbox-material'
       -- NOTE: If I want, I can change some group colors like that
 
-      -- vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
+      vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
+      vim.cmd 'highlight! link FloatBorder NormalFloat'
     end,
   },
   {
@@ -1251,6 +1257,50 @@ require('lazy').setup({
     -- keys = {
     --   { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Show Neogit UI' },
     -- },
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = { 'kevinhwang91/promise-async' },
+    lazy = false,
+    config = function()
+      vim.o.foldcolumn = 'auto:9' -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      vim.o.foldminlines = 3
+
+      -- vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      -- vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+      vim.keymap.set('n', 'K', function()
+        local winid = require('ufo').peekFoldedLinesUnderCursor()
+        if not winid then hover_definition_with_border() end
+      end)
+
+      -- INFO: IDK why it was written in "minimal configuration"
+      -- maybe other plugins setup are doing the job done
+      --
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.foldingRange = {
+      --   dynamicRegistration = false,
+      --   lineFoldingOnly = true,
+      -- }
+      -- local language_servers = vim.lsp.get_clients()
+      -- for _, ls in ipairs(language_servers) do
+      --   require('lspconfig')[ls].setup {
+      --     capabilities = capabilities,
+      --   }
+      -- end
+
+      require('ufo').setup {
+        preview = {
+          max_height = 30,
+          winblend = 0,
+          mappings = {
+            switch = 'K',
+          },
+        },
+      }
+    end,
   },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
