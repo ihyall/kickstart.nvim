@@ -860,15 +860,15 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
+      -- local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function() return '%2l:%-2v' end
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function() return '%2l:%-2v' end
 
       -- ... and there is more!
       --  Check out: https://github.com/nvim-mini/mini.nvim
@@ -981,16 +981,51 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- { import = 'custom.plugins' },
+  -- {
+  --   'sainnhe/gruvbox-material',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'gruvbox-material'
+  --     -- NOTE: If I want, I can change some group colors like that
+  --
+  --     vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
+  --     vim.cmd 'highlight! link FloatBorder NormalFloat'
+  --     vim.cmd 'highlight! link WayfinderNormal Normal'
+  --     vim.cmd 'highlight! link WayfinderPreviewTarget TelescopeSelection'
+  --   end,
+  -- },
   {
-    'sainnhe/gruvbox-material',
+    'f4z3r/gruvbox-material.nvim',
+    name = 'gruvbox-material',
     lazy = false,
     priority = 1000,
+    opts = {},
     config = function()
-      vim.cmd.colorscheme 'gruvbox-material'
-      -- NOTE: If I want, I can change some group colors like that
-
-      vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
-      vim.cmd 'highlight! link FloatBorder NormalFloat'
+      require('gruvbox-material').setup {
+        italics = true, -- enable italics in general
+        contrast = 'medium', -- set contrast, can be any of "hard", "medium", "soft"
+        comments = {
+          italics = true, -- enable italic comments
+        },
+        background = {
+          transparent = false, -- set the background to be opaque
+        },
+        float = {
+          force_background = false, -- set to true to force backgrounds on floats even when
+          -- background.transparent is set
+          background_color = nil, -- set color for float backgrounds. If nil, uses the default color set
+          -- by the color scheme
+        },
+        signs = {
+          force_background = false, -- set to true to force backgrounds on signs even when
+          -- background.transparent is set
+          background_color = nil, -- set color for sign backgrounds. If nil, uses the default color set
+          -- by the color scheme
+        },
+        customize = nil, -- customize the theme in any way you desire, see below what this
+        -- configuration accepts
+      }
     end,
   },
   {
@@ -1093,18 +1128,18 @@ require('lazy').setup({
         end,
         desc = 'NeoTree browse buffers',
       },
-      {
-        '\\o',
-        function()
-          require('neo-tree.command').execute {
-            toggle = true,
-            source = 'document_symbols',
-            position = 'float',
-          }
-        end,
-        desc = 'NeoTree document symbols toggle',
-        silent = true,
-      },
+      -- {
+      --   '\\o',
+      --   function()
+      --     require('neo-tree.command').execute {
+      --       toggle = true,
+      --       source = 'document_symbols',
+      --       position = 'float',
+      --     }
+      --   end,
+      --   desc = 'NeoTree document symbols toggle',
+      --   silent = true,
+      -- },
     },
     opts = {
       default_component_configs = {
@@ -1302,6 +1337,48 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'hedyhli/outline.nvim',
+    config = function()
+      vim.keymap.set('n', '\\o', '<cmd>OutlineOpen<CR>', { desc = 'Show Outline' })
+
+      require('outline').setup {
+        outline_window = {
+          relative_width = true,
+          width = 15,
+          auto_width = {
+            enabled = true,
+            max_width = 25,
+            include_symbol_details = false,
+          },
+        },
+      }
+    end,
+  },
+  {
+    'error311/wayfinder.nvim',
+    opts = {},
+    config = function()
+      require('wayfinder').setup {}
+      vim.keymap.set('n', '<leader>wf', '<Plug>(WayfinderOpen)', { desc = 'Wayfinder' })
+    end,
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local theme = require('gruvbox-material.lualine').theme 'medium'
+
+      -- some theme customization to your liking, for instance:
+      -- local g_colors = require("gruvbox-material.colors")
+      -- local colors = g_colors.get(vim.o.background, "medium")
+      -- theme.normal["x"] = { fg = colors.bg_statusline1, bg = colors.purple }
+
+      require('lualine').setup {
+        options = { theme = theme },
+      }
+    end,
+  },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -1336,3 +1413,5 @@ vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.shiftround = true
 vim.o.shiftwidth = 4
+
+vim.cmd.colorscheme 'gruvbox-material'
