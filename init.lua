@@ -1443,3 +1443,4 @@ vim.o.shiftround = true
 vim.o.shiftwidth = 4
 
 vim.cmd.colorscheme 'gruvbox-material'
+vim.api.nvim_set_hl(0, 'WayfinderPreviewTarget', { link = 'DiffAdd' })
