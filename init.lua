@@ -984,51 +984,22 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- { import = 'custom.plugins' },
-  -- {
-  --   'sainnhe/gruvbox-material',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'gruvbox-material'
-  --     -- NOTE: If I want, I can change some group colors like that
-  --
-  --     vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
-  --     vim.cmd 'highlight! link FloatBorder NormalFloat'
-  --     vim.cmd 'highlight! link WayfinderNormal Normal'
-  --     vim.cmd 'highlight! link WayfinderPreviewTarget TelescopeSelection'
-  --   end,
-  -- },
   {
-    'f4z3r/gruvbox-material.nvim',
-    name = 'gruvbox-material',
+    'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
-    opts = {},
     config = function()
-      require('gruvbox-material').setup {
-        italics = true, -- enable italics in general
-        contrast = 'medium', -- set contrast, can be any of "hard", "medium", "soft"
-        comments = {
-          italics = true, -- enable italic comments
-        },
-        background = {
-          transparent = false, -- set the background to be opaque
-        },
-        float = {
-          force_background = false, -- set to true to force backgrounds on floats even when
-          -- background.transparent is set
-          background_color = nil, -- set color for float backgrounds. If nil, uses the default color set
-          -- by the color scheme
-        },
-        signs = {
-          force_background = false, -- set to true to force backgrounds on signs even when
-          -- background.transparent is set
-          background_color = nil, -- set color for sign backgrounds. If nil, uses the default color set
-          -- by the color scheme
-        },
-        customize = nil, -- customize the theme in any way you desire, see below what this
-        -- configuration accepts
-      }
+      vim.cmd.colorscheme 'gruvbox-material'
+      vim.g.gruvbox_material_enable_italic = false
+      vim.g.gruvbox_material_enable_bold = true
+      -- vim.g.gruvbox_material_transparent_background = 1
+      vim.g.gruvbox_material_float_style = 'blend'
+
+      -- NOTE: If I want, I can change some group colors like that
+      -- vim.cmd 'highlight! link LspFloatWinBorder NormalFloat'
+      -- vim.cmd 'highlight! link FloatBorder NormalFloat'
+      -- vim.cmd 'highlight! link WayfinderNormal Normal'
+      -- vim.cmd 'highlight! link WayfinderPreviewTarget TelescopeSelection'
     end,
   },
   {
@@ -1378,7 +1349,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local theme = require('gruvbox-material.lualine').theme 'medium'
+      -- local theme = require('gruvbox-material.lualine').theme 'medium'
 
       -- some theme customization to your liking, for instance:
       -- local g_colors = require("gruvbox-material.colors")
@@ -1386,7 +1357,7 @@ require('lazy').setup({
       -- theme.normal["x"] = { fg = colors.bg_statusline1, bg = colors.purple }
 
       require('lualine').setup {
-        options = { theme = theme },
+        options = { theme = 'gruvbox-material' },
       }
     end,
   },
