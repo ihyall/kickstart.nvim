@@ -123,7 +123,7 @@ vim.o.breakindent = true
 vim.o.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = false
+vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
@@ -158,6 +158,9 @@ vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
+vim.o.sidescroll = 1
+vim.o.wrap = false
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -699,6 +702,7 @@ require('lazy').setup({
         },
       })
       vim.lsp.enable 'lua_ls'
+      vim.lsp.enable 'qmlls'
     end,
   },
 
@@ -1147,6 +1151,12 @@ require('lazy').setup({
       },
       tabs_layout = 'equal',
       content_layout = 'center',
+      event_handlers = {
+        {
+          event = 'neo_tree_buffer_enter',
+          handler = function() vim.opt_local.relativenumber = true end,
+        },
+      },
     },
   },
   {
