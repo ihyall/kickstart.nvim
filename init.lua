@@ -183,16 +183,6 @@ vim.o.confirm = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-local hover_definition_with_border = function()
-  vim.lsp.buf.hover {
-    border = 'rounded',
-    max_height = 25,
-    max_width = 120,
-  }
-end
-
--- INFO: moved to nvim-ufo config to enable fold previews
--- vim.keymap.set('n', 'K', hover_definition_with_border() { desc = 'Hover documentation' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts

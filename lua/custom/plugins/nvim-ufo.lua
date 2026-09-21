@@ -8,6 +8,13 @@ return {
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
     vim.o.foldminlines = 3
+    local hover_definition_with_border = function()
+      vim.lsp.buf.hover {
+        border = 'rounded',
+        max_height = 25,
+        max_width = 120,
+      }
+    end
 
     -- vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
     -- vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
