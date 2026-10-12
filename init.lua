@@ -127,7 +127,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = 'auto:1-3'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -160,12 +160,15 @@ vim.o.cursorline = true
 vim.o.scrolloff = 5
 vim.o.sidescrolloff = 5
 vim.o.sidescroll = 1
-vim.o.wrap = false
+vim.o.wrap = true
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
+
+-- INFO: Allows block visual selection to be an actual block, can be set to 'all' so you can move your cursor and start operations literally anywhere
+vim.o.virtualedit = 'block'
 
 -- This option controls the default look of window borders, commented because it messes with autocompletion and stuff
 -- vim.o.winborder = 'rounded'
@@ -841,7 +844,7 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true, sign_priority = 10 } },
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
