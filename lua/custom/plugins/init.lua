@@ -23,4 +23,6 @@ return {
   require 'custom.plugins.multilayout',
   require 'custom.plugins.oil',
   require 'custom.plugins.indent-blankline',
+  require 'custom.plugins.leetcode',
+  require 'custom.plugins.gitsigns',
 }

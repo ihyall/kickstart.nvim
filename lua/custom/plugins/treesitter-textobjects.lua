@@ -41,15 +41,108 @@ return {
         -- and should return true of false
         include_surrounding_whitespace = false,
       },
+      move = {
+        set_jumps = true,
+      },
     }
 
     -- keymaps
     -- You can use the capture groups defined in `textobjects.scm`
+    -- INFO: Selection section
     vim.keymap.set({ 'x', 'o' }, 'am', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects') end)
     vim.keymap.set({ 'x', 'o' }, 'im', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects') end)
     vim.keymap.set({ 'x', 'o' }, 'ac', function() require('nvim-treesitter-textobjects.select').select_textobject('@class.outer', 'textobjects') end)
     vim.keymap.set({ 'x', 'o' }, 'ic', function() require('nvim-treesitter-textobjects.select').select_textobject('@class.inner', 'textobjects') end)
     -- You can also use captures from other query groups like `locals.scm`
     vim.keymap.set({ 'x', 'o' }, 'as', function() require('nvim-treesitter-textobjects.select').select_textobject('@local.scope', 'locals') end)
+
+    -- INFO: Jumps section
+    -- INFO: Functions & methods
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']m',
+      function() require('nvim-treesitter-textobjects.move').goto_next_start('@function.outer', 'textobjects') end,
+      { desc = 'Jump to next [m]ethod start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[m',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects') end,
+      { desc = 'Jump to previous [m]ethod start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']M',
+      function() require('nvim-treesitter-textobjects.move').goto_next_end('@function.outer', 'textobjects') end,
+      { desc = 'Jump to next [m]ethod end' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[M',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_end('@function.outer', 'textobjects') end,
+      { desc = 'Jump to previous [m]ethod end' }
+    )
+
+    -- INFO: Classes
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']c',
+      function() require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects') end,
+      { desc = 'Jump to next [c]lass start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[c',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer', 'textobjects') end,
+      { desc = 'Jump to previous [c]lass start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']C',
+      function() require('nvim-treesitter-textobjects.move').goto_next_end('@class.outer', 'textobjects') end,
+      { desc = 'Jump to next [c]lass end' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[C',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_end('@class.outer', 'textobjects') end,
+      { desc = 'Jump to previous [c]lass end' }
+    )
+
+    -- INFO: Loops & conditional statements
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']b',
+      function() require('nvim-treesitter-textobjects.move').goto_next_start({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
+      { desc = 'Jump to next [b]lock start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']B',
+      function() require('nvim-treesitter-textobjects.move').goto_next_end({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
+      { desc = 'Jump to next [b]lock end' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[b',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_start({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
+      { desc = 'Jump to previous [b]lock start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[B',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_end({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
+      { desc = 'Jump to previous [b]lock end' }
+    )
+
+    -- INFO: Allow repeating jumps via ; and ,
+    -- vim way: ; and , goes to the direction you were moving.
+    local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
+    vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+    vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+    vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
+    vim.keymap.set({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
+    vim.keymap.set({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
+    vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
   end,
 }
