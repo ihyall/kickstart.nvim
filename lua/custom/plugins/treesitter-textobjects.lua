@@ -109,7 +109,7 @@ return {
       { desc = 'Jump to previous [c]lass end' }
     )
 
-    -- INFO: Loops & conditional statements
+    -- INFO: Code blocks (loops + conditional statements)
     vim.keymap.set(
       { 'n', 'x', 'o' },
       ']b',
@@ -133,6 +133,57 @@ return {
       '[B',
       function() require('nvim-treesitter-textobjects.move').goto_previous_end({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
       { desc = 'Jump to previous [b]lock end' }
+    )
+
+    -- INFO: Loops
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']l',
+      function() require('nvim-treesitter-textobjects.move').goto_next_start('@loop.outer', 'textobjects') end,
+      { desc = 'Jump to next [l]oop start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[l',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_start('@loop.outer', 'textobjects') end,
+      { desc = 'Jump to previous [l]oop start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']L',
+      function() require('nvim-treesitter-textobjects.move').goto_next_end('@loop.outer', 'textobjects') end,
+      { desc = 'Jump to next [l]oop end' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[L',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_end('@loop.outer', 'textobjects') end,
+      { desc = 'Jump to previous [l]oop end' }
+    )
+
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']i',
+      function() require('nvim-treesitter-textobjects.move').goto_next_start('@conditional.outer', 'textobjects') end,
+      { desc = 'Jump to next [i]f statement start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[i',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_start('@conditional.outer', 'textobjects') end,
+      { desc = 'Jump to previous [i]f statement start' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      ']I',
+      function() require('nvim-treesitter-textobjects.move').goto_next_end('@conditional.outer', 'textobjects') end,
+      { desc = 'Jump to next [i]f statement end' }
+    )
+    vim.keymap.set(
+      { 'n', 'x', 'o' },
+      '[I',
+      function() require('nvim-treesitter-textobjects.move').goto_previous_end('@conditional.outer', 'textobjects') end,
+      { desc = 'Jump to previous [i]f statement end' }
     )
 
     -- INFO: Allow repeating jumps via ; and ,
