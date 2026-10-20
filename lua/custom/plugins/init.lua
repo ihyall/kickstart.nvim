@@ -25,4 +25,5 @@ return {
   require 'custom.plugins.indent-blankline',
   require 'custom.plugins.leetcode',
   require 'custom.plugins.gitsigns',
+  require 'custom.plugins.which-key',
 }
