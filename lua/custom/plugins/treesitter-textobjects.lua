@@ -49,12 +49,56 @@ return {
     -- keymaps
     -- You can use the capture groups defined in `textobjects.scm`
     -- INFO: Selection section
-    vim.keymap.set({ 'x', 'o' }, 'am', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'im', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'ac', function() require('nvim-treesitter-textobjects.select').select_textobject('@class.outer', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'ic', function() require('nvim-treesitter-textobjects.select').select_textobject('@class.inner', 'textobjects') end)
+    vim.keymap.set(
+      { 'x', 'o' },
+      'am',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects') end,
+      { desc = 'Around [m]ethod' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'im',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects') end,
+      { desc = 'Inside [m]ethod' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'ac',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@class.outer', 'textobjects') end,
+      { desc = 'Around [c]lass' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'ic',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@class.inner', 'textobjects') end,
+      { desc = 'Inside [c]lass' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'al',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@loop.outer', 'textobjects') end,
+      { desc = 'Around [l]oop' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'il',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@loop.inner', 'textobjects') end,
+      { desc = 'Inside [l]loop' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'ai',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@conditional.outer', 'textobjects') end,
+      { desc = 'Around [i]f statement' }
+    )
+    vim.keymap.set(
+      { 'x', 'o' },
+      'ii',
+      function() require('nvim-treesitter-textobjects.select').select_textobject('@conditional.inner', 'textobjects') end,
+      { desc = 'Inside [i]f statement' }
+    )
     -- You can also use captures from other query groups like `locals.scm`
-    vim.keymap.set({ 'x', 'o' }, 'as', function() require('nvim-treesitter-textobjects.select').select_textobject('@local.scope', 'locals') end)
+    vim.keymap.set({ 'x', 'o' }, 'as', function() require('nvim-treesitter-textobjects.select').select_textobject('@local.scope', 'locals') end, { desc = '' })
 
     -- INFO: Jumps section
     -- INFO: Functions & methods
@@ -107,32 +151,6 @@ return {
       '[C',
       function() require('nvim-treesitter-textobjects.move').goto_previous_end('@class.outer', 'textobjects') end,
       { desc = 'Jump to previous [c]lass end' }
-    )
-
-    -- INFO: Code blocks (loops + conditional statements)
-    vim.keymap.set(
-      { 'n', 'x', 'o' },
-      ']b',
-      function() require('nvim-treesitter-textobjects.move').goto_next_start({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
-      { desc = 'Jump to next [b]lock start' }
-    )
-    vim.keymap.set(
-      { 'n', 'x', 'o' },
-      ']B',
-      function() require('nvim-treesitter-textobjects.move').goto_next_end({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
-      { desc = 'Jump to next [b]lock end' }
-    )
-    vim.keymap.set(
-      { 'n', 'x', 'o' },
-      '[b',
-      function() require('nvim-treesitter-textobjects.move').goto_previous_start({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
-      { desc = 'Jump to previous [b]lock start' }
-    )
-    vim.keymap.set(
-      { 'n', 'x', 'o' },
-      '[B',
-      function() require('nvim-treesitter-textobjects.move').goto_previous_end({ '@conditional.outer', '@loop.outer' }, 'textobjects') end,
-      { desc = 'Jump to previous [b]lock end' }
     )
 
     -- INFO: Loops
