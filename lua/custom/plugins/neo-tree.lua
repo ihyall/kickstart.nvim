@@ -56,6 +56,34 @@ return {
     -- },
   },
   opts = {
+    sort_function = function(a, b)
+      local function extractDigits(s) return s:match '(%D*)(%d*)(.*)' end
+      if a.type ~= b.type then return a.type < b.type end
+
+      a = a.path
+      b = b.path
+      repeat
+        local a_prefix, a_digits, a_suffix = extractDigits(a)
+        local b_prefix, b_digits, b_suffix = extractDigits(b)
+
+        if a_digits == nil or b_digits == nil then return a_prefix < b_prefix end
+
+        if a_prefix ~= b_prefix then
+          return a_prefix < b_prefix
+        else
+          repeat
+            if a_digits == b_digits then
+              a = a_suffix
+              b = b_suffix
+              break
+            end
+
+            return tonumber(a_digits) < tonumber(b_digits)
+          until true
+        end
+      until a ~= nil and b ~= nil
+      return a < b
+    end,
     default_component_configs = {
       indent = {
         with_expanders = true,
