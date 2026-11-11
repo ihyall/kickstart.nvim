@@ -5,7 +5,9 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
-    'antosha417/nvim-lsp-file-operations',
+    -- 'antosha417/nvim-lsp-file-operations',
+    'Crysthamus/nvim-file-operations', -- Changed to this because :checkhealth suggested. Didn't do anything else
+    'folke/snacks.nvim',
   },
   lazy = false,
   keys = {

@@ -8,6 +8,10 @@ return {
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
   opts = {
+    win_opts = {
+      -- conceallevel = { default = vim.o.conceallevel, rendered = 2 },
+      -- concealcursor = { default = vim.o.concealcursor, rendered = 'nc' },
+    },
     latex = {
       enabled = false, -- Потому что у меня нет конвертеров
       render_modes = false,
@@ -17,5 +21,9 @@ return {
       top_pad = 0,
       bottom_pad = 0,
     },
+    -- paragraph = {
+    --   left_margin = 0.5,
+    --   min_width = 30,
+    -- },
   },
 }

@@ -161,6 +161,7 @@ vim.o.scrolloff = 5
 vim.o.sidescrolloff = 5
 vim.o.sidescroll = 1
 vim.o.wrap = true
+vim.o.linebreak = true
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -345,11 +346,11 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = { ['<c-enter>'] = 'to_fuzzy_refine', ['<c-j>'] = 'move_selection_next', ['<c-k>'] = 'move_selection_previous' },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
@@ -849,6 +850,9 @@ vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.shiftround = true
 vim.o.shiftwidth = 4
+
+vim.o.conceallevel = 2
+vim.o.concealcursor = 'nc'
 
 vim.cmd.colorscheme 'gruvbox-material'
 vim.api.nvim_set_hl(0, 'WayfinderPreviewTarget', { link = 'DiffAdd' })
